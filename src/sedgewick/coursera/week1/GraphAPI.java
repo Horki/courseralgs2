@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.NoSuchElementException;
+import java.util.Stack;
 
 public class GraphAPI {
     private final int V;
@@ -23,6 +24,28 @@ public class GraphAPI {
         }
     }
 
+    // Deep copy example
+    public GraphAPI(GraphAPI G) {
+        V = G.V();
+        E = G.E();
+        adj = (Bag<Integer>[]) new Bag[V];
+        for (int v = 0; v < V; ++v) {
+            adj[v] = new Bag<>();
+        }
+        // do a copy
+        for (int v = 0; v < V; ++v) {
+            // Use stack to reverse adjacency list
+            Stack<Integer> reverse = new Stack<>();
+            for (int w : G.adj(v)) {
+                reverse.push(w);
+            }
+            // Fill adjacency list
+            for (int w : reverse) {
+                adj[v].add(w);
+            }
+        }
+    }
+
     public GraphAPI(In in) {
         if (null == in) {
             throw new IllegalArgumentException("Input is not valid!");
@@ -36,12 +59,12 @@ public class GraphAPI {
             for (int v = 0; v < V; ++v) {
                 adj[v] = new Bag<>();
             }
-            E = in.readInt();
-            StdOut.println("Vortex: " + V + ", Edges: " + E);
-            if (E < 0) {
+            int edges = in.readInt();
+            StdOut.println("Vortex: " + V + ", Edges: " + edges);
+            if (edges < 0) {
                 throw new IllegalArgumentException("Number of edges must be positive");
             }
-            for (int e = 0; e < E; ++e) {
+            for (int e = 0; e < edges; ++e) {
                 int v = in.readInt();
                 int w = in.readInt();
                 StdOut.println("v = " + v + ", w = " + w);
@@ -53,11 +76,19 @@ public class GraphAPI {
         }
     }
 
+    private void validateVertex(int v) {
+        if (v < 0 || v >= V) {
+            throw new IllegalArgumentException("Vertex: " + v + " is out off range");
+        }
+    }
+
     // add an edge v-w
     public void addEdge(int v, int w) {
-//        ++E;
+        validateVertex(v);
+        validateVertex(w);
         adj[v].add(w);
         adj[w].add(v);
+        ++E;
     }
 
     // vertices adjacent to v
@@ -76,16 +107,16 @@ public class GraphAPI {
     }
 
     public String toString() {
-        String res = "";
-        res += V + " vertices, " + E + ", edges \n";
+        StringBuilder res = new StringBuilder();
+        res.append(V + " vertices, " + E + " edges \n");
         for (int v = 0; v < V; ++v) {
-            res += v + ": ";
-            for (int w : adj[v]) {
-                res += "" + w + ", ";
+            res.append(v + ": ");
+            for (int w : adj(v)) {
+                res.append(w + ", ");
             }
-            res += "\n";
+            res.append("\n");
         }
-        return res;
+        return res.toString();
     }
 
     // Compute the degree of v
@@ -142,7 +173,7 @@ public class GraphAPI {
 
     public static int numberOfSelfLoops(GraphAPI G) {
         int count = 0;
-        for (int v = 0; v < G.V(); v++) {
+        for (int v = 0; v < G.V(); ++v) {
             for (int w : G.adj(v)) {
                 if (v == w) {
                     ++count;
@@ -155,7 +186,7 @@ public class GraphAPI {
 
     public int numberOfSelfLoops() {
         int count = 0;
-        for (int v = 0; v < V; v++) {
+        for (int v = 0; v < V; ++v) {
             for (int w : adj(v)) {
                 if (v == w) {
                     ++count;
@@ -172,10 +203,21 @@ public class GraphAPI {
         In in = new In(args[0]);
         GraphAPI G = new GraphAPI(in);
         StdOut.println(G);
-//        for (int v = 0; v < G.V(); ++v) {
-//            for (int w : G.adj(v)) {
-//                StdOut.println(v + "-" + w);
-//            }
-//        }
+        double averageDegree = G.averageDegree();
+        int maxDegree = G.maxDegree();
+        int numSelfLoops = G.numberOfSelfLoops();
+        StdOut.println("average = " + averageDegree + ", max = " + maxDegree + ", self loops: " + numSelfLoops);
+        StdOut.println(averageDegree == 2.0);
+        StdOut.println(maxDegree == 4);
+        StdOut.println(numSelfLoops == 0);
+        for (int v = 0; v < G.V(); ++v) {
+            for (int w : G.adj(v)) {
+                StdOut.println(v + "-" + w);
+            }
+        }
+        GraphAPI Gcopy = new GraphAPI(G);
+        StdOut.println(Gcopy.E() == G.E());
+        StdOut.println(Gcopy.V() == G.V());
+        StdOut.println(numSelfLoops == Gcopy.numberOfSelfLoops());
     }
 }
