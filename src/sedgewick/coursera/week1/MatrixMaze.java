@@ -70,10 +70,7 @@ public class MatrixMaze {
         return (i * width) + j;
     }
 
-    public void outputResultDfs(int from, int to) {
-        validateRow(from);
-        validateRow(to);
-        Paths search = new DFS(graph, from);
+    private void outputResult(Paths search, int from, int to) {
         if (!search.hasPathTo(to)) {
             StdOut.println("nope");
             return;
@@ -97,6 +94,22 @@ public class MatrixMaze {
             }
         }
     }
+
+    public void outputResultDfs(int from, int to) {
+        validateRow(from);
+        validateRow(to);
+        Paths search = new DFS(graph, from);
+        outputResult(search, from, to);
+    }
+
+
+    public void outputResultBfs(int from, int to) {
+        validateRow(from);
+        validateRow(to);
+        Paths search = new BFS(graph, from);
+        outputResult(search, from, to);
+    }
+
 
     private void validateRow(int x) {
         if (x < 0 || x >= vertex) {
@@ -129,6 +142,9 @@ public class MatrixMaze {
             }
             StdOut.println();
         }
+        StdOut.println("DFS:");
         m.outputResultDfs(from, to);
+        StdOut.println("BFS:");
+        m.outputResultBfs(from, to);
     }
 }
