@@ -86,9 +86,19 @@ public class GraphAPI {
     public void addEdge(int v, int w) {
         validateVertex(v);
         validateVertex(w);
-        adj[v].add(w);
-        adj[w].add(v);
-        ++E;
+        boolean exists = false;
+        // TODO: make search O(1)|O(log n) later
+        for (int item : adj(v)) {
+            if (item == w) {
+                exists = true;
+                break;
+            }
+        }
+        if (!exists) {
+            adj[v].add(w);
+            adj[w].add(v);
+            ++E;
+        }
     }
 
     // vertices adjacent to v
