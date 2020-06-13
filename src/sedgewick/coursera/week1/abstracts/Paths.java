@@ -1,7 +1,7 @@
 package sedgewick.coursera.week1.abstracts;
 
-import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.Stack;
+import sedgewick.coursera.week1.GraphAPI;
 
 public abstract class Paths {
     protected boolean[] marked;
@@ -9,7 +9,7 @@ public abstract class Paths {
     protected int count;
     protected final int s;
 
-    public Paths(Graph G, int source) {
+    public Paths(GraphAPI G, int source) {
         marked = new boolean[G.V()];
         edgeTo = new int[G.V()];
         validateVertex(source);
