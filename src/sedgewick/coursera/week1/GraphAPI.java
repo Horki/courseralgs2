@@ -73,6 +73,24 @@ public class GraphAPI extends Adj {
         return max;
     }
 
+    // undirected edge
+    public void addEdge(int v, int w) {
+        validateVertex(v);
+        validateVertex(w);
+        boolean exists = false;
+        // TODO: make search O(1)|O(log n) later
+        for (int item : adj(v)) {
+            if (item == w) {
+                exists = true;
+                break;
+            }
+        }
+        if (!exists) {
+            adj[v].add(w);
+            adj[w].add(v);
+            ++E;
+        }
+    }
 
     // Compute Average Degree
     public static double averageDegree(GraphAPI G) {

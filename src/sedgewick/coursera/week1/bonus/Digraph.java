@@ -46,6 +46,24 @@ public class Digraph extends Adj {
         return buffer.toString();
     }
 
+    // directed edge
+    public void addEdge(int v, int w) {
+        validateVertex(v);
+        validateVertex(w);
+        boolean exists = false;
+        // TODO: make search O(1)|O(log n) later
+        for (int item : adj(v)) {
+            if (item == w) {
+                exists = true;
+                break;
+            }
+        }
+        if (!exists) {
+            adj[v].add(w);
+            ++E;
+        }
+    }
+
     // tinyDG.txt
     public static void main(String[] args) {
         In in = new In(args[0]);

@@ -100,23 +100,7 @@ public abstract class Adj {
     }
 
     // add an edge v-w
-    public void addEdge(int v, int w) {
-        validateVertex(v);
-        validateVertex(w);
-        boolean exists = false;
-        // TODO: make search O(1)|O(log n) later
-        for (int item : adj(v)) {
-            if (item == w) {
-                exists = true;
-                break;
-            }
-        }
-        if (!exists) {
-            adj[v].add(w);
-            adj[w].add(v);
-            ++E;
-        }
-    }
+    public abstract void addEdge(int v, int w);
 
     public abstract String toString();
 }
