@@ -4,21 +4,21 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import sedgewick.coursera.week1.abstracts.Adj;
 
-public class Diagraph extends Adj {
+public class Digraph extends Adj {
 
     // create an empty digraph with V vertices
-    public Diagraph(int V) {
+    public Digraph(int V) {
         super(V);
     }
 
     // create a digraph from input stream
-    public Diagraph(In in) {
+    public Digraph(In in) {
         super(in);
     }
 
     // reverse of this digraph
-    public Diagraph reverse() {
-        Diagraph reverse = new Diagraph(V);
+    public Digraph reverse() {
+        Digraph reverse = new Digraph(V);
         for (int v = 0; v < V; ++v) {
             for (int w : adj(v)) {
                 reverse.addEdge(w, v);
@@ -49,9 +49,9 @@ public class Diagraph extends Adj {
     // tinyDG.txt
     public static void main(String[] args) {
         In in = new In(args[0]);
-        Diagraph G = new Diagraph(in);
+        Digraph G = new Digraph(in);
         StdOut.println(G);
-        Diagraph reverse = G.reverse();
+        Digraph reverse = G.reverse();
         StdOut.println("Reversed:");
         StdOut.println(reverse);
     }
