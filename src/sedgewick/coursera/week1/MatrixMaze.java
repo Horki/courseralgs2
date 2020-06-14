@@ -121,7 +121,9 @@ public class MatrixMaze {
         return graph;
     }
 
-    // matrix.csv
+    // MatrixMaze matrix.csv $(wc -l matrix.csv)
+    // rows: $ wc -l matrix.csv
+    // cols: $ head -n 1 matrix.csv | awk -F ',' '{print NF}'
     public static void main(String[] args) {
 //        boolean[][] matrix = {
 //                {true, false, true}, // 0 1 0 | 0 1 2
@@ -130,18 +132,48 @@ public class MatrixMaze {
 //        };
 //        MatrixMaze m = new MatrixMaze(matrix);
         In csv = new In(args[0]);
-        MatrixMaze m = new MatrixMaze(csv, 5, 6);
+        int rows = Integer.parseInt(args[1]);
+        int cols = Integer.parseInt(args[2]);
+        MatrixMaze m = new MatrixMaze(csv, rows, cols);
         GraphAPI g = m.getGraph();
         StdOut.println("greph = " + g);
         int from = 0;
-        int to = 29;
-        DFS dfs = new DFS(g, from);
-        if (dfs.hasPathTo(to)) {
-            for (int item : dfs.pathTo(to)) {
-                StdOut.print(item + " ");
+        int to = rows * cols - 1;
+        {
+            StdOut.println("DFS:");
+            Paths dfs = new DFS(g, from);
+            for (int v = 0; v < g.V(); v++) {
+                StdOut.print(from + " to " + v + ": ");
+                if (dfs.hasPathTo(v)) {
+                    for (int x : dfs.pathTo(v)) {
+                        if (x == from) {
+                            StdOut.print(x);
+                        } else {
+                            StdOut.print("-" + x);
+                        }
+                    }
+                }
+                StdOut.println();
             }
-            StdOut.println();
         }
+        {
+            StdOut.println("BFS:");
+            Paths bfs = new BFS(g, from);
+            for (int v = 0; v < g.V(); v++) {
+                StdOut.print(from + " to " + v + ": ");
+                if (bfs.hasPathTo(v)) {
+                    for (int x : bfs.pathTo(v)) {
+                        if (x == from) {
+                            StdOut.print(x);
+                        } else {
+                            StdOut.print("-" + x);
+                        }
+                    }
+                }
+                StdOut.println();
+            }
+        }
+
         StdOut.println("DFS:");
         m.outputResultDfs(from, to);
         StdOut.println("BFS:");
