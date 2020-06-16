@@ -8,6 +8,9 @@ public class Edge implements Comparable<Edge> {
     private final double weight;
 
     public Edge(int v, int w, double weight) {
+        if (v < 0) throw new IllegalArgumentException("v is Negative");
+        if (w < 0) throw new IllegalArgumentException("w is Negative");
+        if (Double.isNaN(weight)) throw new IllegalArgumentException("Weight is NaN");
         this.v = v;
         this.w = w;
         this.weight = weight;
@@ -20,7 +23,9 @@ public class Edge implements Comparable<Edge> {
 
     // the endpoint that's not v
     public int other(int vertex) {
-        return vertex == v ? w : v;
+        if (vertex == v) return w;
+        if (vertex == w) return v;
+        throw new IllegalArgumentException("Missing other");
     }
 
     // compare this edge to that edge
