@@ -8,8 +8,8 @@ import edu.princeton.cs.algs4.Topological;
 import sedgewick.coursera.week2.bonus.abstracts.SingleSourceShortestPath;
 
 public class AcyclicSP extends SingleSourceShortestPath {
-    private DirectedEdge[] edgeTo;
-    private double[] distTo;
+    private final DirectedEdge[] edgeTo;
+    private final double[] distTo;
 
     public AcyclicSP(EdgeWeightedDigraph G, int source) {
         edgeTo = new DirectedEdge[G.V()];
@@ -62,15 +62,17 @@ public class AcyclicSP extends SingleSourceShortestPath {
     public static void main(String[] args) {
         In in = new In(args[0]);
         EdgeWeightedDigraph G = new EdgeWeightedDigraph(in);
-        int source = 5;
-        AcyclicSP sp = new AcyclicSP(G, source);
-        for (int v = 0; v < G.V(); ++v) {
-            if (source != v && sp.hasPathTo(v)) {
-                StdOut.printf("%d to %d (%.2f): ", source, v, sp.distTo(v));
-                for (DirectedEdge e : sp.pathTo(v)) {
-                    StdOut.print(e + " ");
+        for (int source = 0; source < G.V(); ++source) {
+            StdOut.println("Acyclic Single source shortest path for source: " + source);
+            SingleSourceShortestPath sp = new AcyclicSP(G, source);
+            for (int v = 0; v < G.V(); ++v) {
+                if (source != v && sp.hasPathTo(v)) {
+                    StdOut.printf("%d to %d (%.2f): ", source, v, sp.distTo(v));
+                    for (DirectedEdge e : sp.pathTo(v)) {
+                        StdOut.print(e + " ");
+                    }
+                    StdOut.println();
                 }
-                StdOut.println();
             }
         }
     }

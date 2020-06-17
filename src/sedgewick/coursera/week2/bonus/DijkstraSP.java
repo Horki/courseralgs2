@@ -67,7 +67,7 @@ public class DijkstraSP extends SingleSourceShortestPath {
         In in = new In(args[0]);
         EdgeWeightedDigraph G = new EdgeWeightedDigraph(in);
         int source = 0;
-        DijkstraSP sp = new DijkstraSP(G, source);
+        SingleSourceShortestPath sp = new DijkstraSP(G, source);
         for (int v = 0; v < G.V(); ++v) {
             if (source != v) {
                 StdOut.printf("%d to %d (%.2f): ", source, v, sp.distTo(v));
