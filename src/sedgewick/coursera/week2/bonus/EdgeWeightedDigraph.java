@@ -88,6 +88,21 @@ public class EdgeWeightedDigraph {
         }
     }
 
+    public Digraph toDigraph() {
+        Digraph digraph = new Digraph(V);
+        for (int v = 0; v < V; ++v) {
+            // reverse so that adjacency list is in same order as original
+            Stack<DirectedEdge> reverse = new Stack<>();
+            for (DirectedEdge e : adj(v)) {
+                reverse.push(e);
+            }
+            for (DirectedEdge e : reverse) {
+                digraph.addEdge(e.from(), e.to());
+            }
+        }
+        return digraph;
+    }
+
     // add weighted edge e to this graph
     public void addEdge(DirectedEdge e) {
         int v = e.from();
