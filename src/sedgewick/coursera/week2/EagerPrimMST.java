@@ -55,7 +55,7 @@ public class EagerPrimMST extends MinimumSpanningTree {
                 edgeTo[w] = e;
                 distTo[w] = e.weight();
                 if (pq.contains(w)) {
-                    pq.change(w, distTo[w]);
+                    pq.changeKey(w, distTo[w]);
                 } else {
                     pq.insert(w, distTo[w]);
                 }

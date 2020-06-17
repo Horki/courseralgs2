@@ -27,7 +27,7 @@ public class KruskalMST extends MinimumSpanningTree {
             int v = e.either();
             int w = e.other(v);
             // log*V
-            if (!uf.connected(v, w)) {
+            if (uf.find(v) != uf.find(w)) {
                 // log*V
                 uf.union(v, w);
                 mst.enqueue(e);

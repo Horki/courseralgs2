@@ -30,13 +30,7 @@ public class Edge implements Comparable<Edge> {
 
     // compare this edge to that edge
     public int compareTo(Edge that) {
-        if (weight < that.weight) {
-            return -1;
-        } else if (weight > that.weight) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return Double.compare(weight, that.weight);
     }
 
     public double weight() {
