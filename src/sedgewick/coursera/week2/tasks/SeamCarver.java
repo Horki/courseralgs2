@@ -98,29 +98,29 @@ public class SeamCarver {
     }
 
     public void outputEnergy() {
-        for (int r = 0; r < height(); ++r) {
-            for (int c = 0; c < width(); ++c) {
-                StdOut.printf("%7.02f ", energy(c, r));
+        for (int i = 0; i < width() * height(); ++i) {
+            StdOut.printf("%7.02f ", energy(i % width(), i / width()));
+            if (i % width() == 0) {
+                StdOut.println();
             }
-            StdOut.println();
         }
     }
 
     public void outputRgb() {
-        for (int r = 0; r < height(); ++r) {
-            for (int c = 0; c < width(); ++c) {
-                StdOut.printf("%7d ", picture.getRGB(c, r));
+        for (int i = 0; i < width() * height(); ++i) {
+            StdOut.printf("%7d ", picture.getRGB(i % width(), i / width()));
+            if (i % width() == 0) {
+                StdOut.println();
             }
-            StdOut.println();
         }
     }
 
     public void outputAsRgb() {
-        for (int r = 0; r < height(); ++r) {
-            for (int c = 0; c < width(); ++c) {
-                StdOut.printf("%s ", new RGB(picture.getRGB(c, r)));
+        for (int i = 0; i < width() * height(); ++i) {
+            StdOut.printf("%s ", new RGB(picture.getRGB(i % width(), i / width())));
+            if (i % width() == 0) {
+                StdOut.println();
             }
-            StdOut.println();
         }
     }
 
@@ -135,10 +135,8 @@ public class SeamCarver {
     private void transposeRgb() {
         // swap width and height for new image
         Picture transpose = new Picture(height(), width());
-        for (int col = 0; col < width(); ++col) {
-            for (int row = 0; row < height(); ++row) {
-                transpose.setRGB(row, col, picture.getRGB(col, row));
-            }
+        for (int i = 0; i < width() * height(); ++i) {
+            transpose.setRGB(i / width(), i % width(), picture.getRGB(i % width(), i / width()));
         }
         picture = transpose;
     }
