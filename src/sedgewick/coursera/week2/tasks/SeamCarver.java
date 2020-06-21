@@ -154,19 +154,16 @@ public class SeamCarver {
 
     // sequence of indices for vertical seam
     public int[] findVerticalSeam() {
-        double[][] distTo = new double[height()][];
-        int[][] edgeTo = new int[height()][];
-        double[][] energy = new double[height()][];
+        double[] distTo = new double[height() * width()];
+        int[] edgeTo = new int[height() * width()];
+        double[] energy = new double[height() * width()];
 
-        for (int row = 0; row < height(); row++) {
-            distTo[row] = new double[width()];
-            edgeTo[row] = new int[width()];
-            energy[row] = new double[width()];
-            for (int col = 0; col < width(); col++) {
-                energy[row][col] = energy(col, row);
-                distTo[row][col] = row == 0 ? 0 : Double.POSITIVE_INFINITY;
-                edgeTo[row][col] = -1;
-            }
+        for (int idx = 0; idx < height() * width(); ++idx) {
+            int row = idx / width();
+            int col = idx % width();
+            energy[idx] = energy(col, row);
+            distTo[idx] = row == 0 ? 0 : Double.POSITIVE_INFINITY;
+            edgeTo[idx] = -1;
         }
 
         // Topological order
@@ -176,10 +173,10 @@ public class SeamCarver {
                 int nextRow = row + 1;
                 for (int nextCol = col - 1; nextCol <= col + 1; nextCol++) {
                     if (nextCol >= 0 && nextCol < width()) {
-                        double weight = energy[nextRow][nextCol];
-                        if (distTo[nextRow][nextCol] > distTo[row][col] + weight) {
-                            distTo[nextRow][nextCol] = distTo[row][col] + weight;
-                            edgeTo[nextRow][nextCol] = col;
+                        double weight = energy[nextRow * width() + nextCol];
+                        if (distTo[nextRow * width() + nextCol] > distTo[row * width() + col] + weight) {
+                            distTo[nextRow * width() + nextCol] = distTo[row * width() + col] + weight;
+                            edgeTo[nextRow * width() + nextCol] = col;
                         }
                     }
                 }
@@ -191,14 +188,14 @@ public class SeamCarver {
         double min = Double.POSITIVE_INFINITY;
         int lowCol = -1;
         for (int col = 0; col < width(); col++) {
-            if (min > distTo[height() - 1][col]) {
+            if (min > distTo[(height() - 1) * width() + col]) {
                 lowCol = col;
-                min = distTo[height() - 1][col];
+                min = distTo[(height() - 1) * width() + col];
             }
         }
         for (int row = height() - 1; row >= 0; --row) {
             verticalSeam[row] = lowCol;
-            lowCol = edgeTo[row][lowCol];
+            lowCol = edgeTo[row * width() + lowCol];
         }
 
         return verticalSeam;
