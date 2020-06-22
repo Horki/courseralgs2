@@ -22,15 +22,12 @@ public class BaseballElimination {
     // other
     private final int numOfVertices;
     private int maxWinIdx;
-    private boolean[] isEliminated;
-    private ArrayList<Bag<String>> certificateOfElimination;
+    private final boolean[] isEliminated;
+    private final ArrayList<Bag<String>> certificateOfElimination;
 
     // create a baseball division from given filename in format specified below
     public BaseballElimination(String filename) {
         In in = new In(filename);
-        if (null == in) {
-            throw new IllegalArgumentException("Must be a valid text file!");
-        }
         maxWinIdx = -1;
         int maxWin = -1;
         // Parsing file START
@@ -177,6 +174,7 @@ public class BaseballElimination {
     // teams12.txt
     public static void main(String[] args) {
         BaseballElimination division = new BaseballElimination(args[0]);
+        StdOut.println("Number of teams: " + division.numberOfTeams());
         for (String team : division.teams()) {
             if (division.isEliminated(team)) {
                 StdOut.print(team + " is eliminated by the subset R = { ");
@@ -184,6 +182,13 @@ public class BaseballElimination {
                     StdOut.print(t + ", ");
                 }
                 StdOut.println("}");
+                StdOut.println(String.format("[%s] Wins = %d, Losses = %d, Remaining = %d",
+                        team, division.wins(team), division.losses(team), division.remaining(team)));
+                for (String t : division.certificateOfElimination(team)) {
+                    StdOut.print(division.against(team, t) + ", ");
+                }
+                StdOut.println();
+
             } else {
                 StdOut.println(team + " is not eliminated");
             }
