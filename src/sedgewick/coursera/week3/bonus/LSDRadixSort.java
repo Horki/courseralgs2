@@ -38,9 +38,27 @@ public class LSDRadixSort {
         }
         sort(a, w);
         StdOut.println("After sort:");
-        for (String item : a) {
-            StdOut.println(item);
+        String[] res = res();
+        for (int i = 0; i < n; ++i) {
+            StdOut.println(a[i].equals(res[i]));
         }
+    }
 
+    private static String[] res() {
+        return new String[]{
+                "1ICK750",
+                "1ICK750",
+                "1OHV845",
+                "1OHV845",
+                "1OHV845",
+                "2IYE230",
+                "2RLA629",
+                "2RLA629",
+                "3ATW723",
+                "3CIO720",
+                "3CIO720",
+                "4JZY524",
+                "4PGC938",
+        };
     }
 }
