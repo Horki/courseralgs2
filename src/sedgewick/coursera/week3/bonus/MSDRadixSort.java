@@ -6,8 +6,6 @@ import edu.princeton.cs.algs4.StdOut;
 public class MSDRadixSort {
     // Radix
     private static int R = 256;
-    // Cutoff for small sub-arrays
-    private static final int M = 15;
     // Auxiliary array for distribution
     private static String[] aux;
 
@@ -22,6 +20,26 @@ public class MSDRadixSort {
         aux = new String[a.length];
         sort(a, aux, 0, a.length - 1, 0);
     }
+
+    private static boolean less(String v, String w, int d) {
+        return v.substring(d).compareTo(w.substring(d)) < 0;
+    }
+
+    private static void exch(Comparable[] a, int i, int j) {
+        Comparable t = a[i];
+        a[i] = a[j];
+        a[j] = t;
+    }
+
+    // Cutoff to insertion sort
+    public static void sort(String[] a, int lo, int hi, int d) {
+        for (int i = lo; i <= hi; ++i) {
+            for (int j = i; j > lo && less(a[j], a[j - 1], d); --j) {
+                exch(a, j, j - 1);
+            }
+        }
+    }
+
 
     private static void sort(String[] a, String[] aux, int lo, int hi, int d) {
         if (hi <= lo) {
@@ -46,36 +64,42 @@ public class MSDRadixSort {
         }
     }
 
-    // input_lsd.txt
+    // input_msd.txt
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
+        String[] aCp = a.clone();
         for (String item : a) {
             StdOut.println(item);
         }
         sort(a);
-        StdOut.println("after sort");
-        StdOut.println("After sort:");
+        StdOut.println("After sort 1:");
         String[] res = res();
         for (int i = 0; i < a.length; ++i) {
             StdOut.println(a[i].equals(res[i]));
+        }
+        StdOut.println("After sort 2:");
+        sort(aCp, 0, aCp.length - 1, 0);
+        for (int i = 0; i < a.length; ++i) {
+            StdOut.println(aCp[i].equals(res[i]));
         }
     }
 
     private static String[] res() {
         return new String[]{
-                "1ICK750",
-                "1ICK750",
-                "1OHV845",
-                "1OHV845",
-                "1OHV845",
-                "2IYE230",
-                "2RLA629",
-                "2RLA629",
-                "3ATW723",
-                "3CIO720",
-                "3CIO720",
-                "4JZY524",
-                "4PGC938",
+                "are",
+                "by",
+                "sea",
+                "seashells",
+                "seashells",
+                "sells",
+                "sells",
+                "she",
+                "she",
+                "shells",
+                "shore",
+                "surely",
+                "the",
+                "the",
         };
     }
 }
