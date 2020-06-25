@@ -154,10 +154,12 @@ public class TrieST<T> implements StringST<T> {
             x.next[c] = delete(x.next[c], key, d + 1);
         }
         if (x.value != null) {
+            --size;
             return x;
         }
         for (char c = 0; c < R; ++c) {
             if (x.next[c] != null) {
+                --size;
                 return x;
             }
         }

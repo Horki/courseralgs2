@@ -17,5 +17,5 @@ public interface StringST<T> {
 
     int size();
 
-    void delete(String key);
+//    void delete(String key);
 }
