@@ -52,7 +52,7 @@ public class BoggleBoard {
 
     private final int rows;
     private final int cols;
-    private char[][] board;
+    private final char[][] board;
 
     // Initializes a random 4-by-4 Boggle board.
     // (by rolling the Hasbro dice)
