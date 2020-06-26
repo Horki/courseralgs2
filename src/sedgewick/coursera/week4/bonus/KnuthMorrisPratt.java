@@ -6,11 +6,10 @@ import edu.princeton.cs.algs4.StdOut;
 public class KnuthMorrisPratt {
     private final int[][] dfa;
     private final int M;
-    private final int R;
 
     public KnuthMorrisPratt(String pattern) {
+        int R = 256;
         M = pattern.length();
-        R = 256;
         dfa = new int[R][M];
         dfa[pattern.charAt(0)][0] = 1;
         for (int X = 0, j = 1; j < M; ++j) {
@@ -49,6 +48,7 @@ public class KnuthMorrisPratt {
         return Integer.MIN_VALUE;
     }
 
+    // kmp.txt
     public static void main(String[] args) {
         String text = "AABRAACADABRAACAADABRA";
         int N = text.length();
@@ -56,5 +56,6 @@ public class KnuthMorrisPratt {
         StdOut.println("text len: " + N);
         KnuthMorrisPratt kMF = new KnuthMorrisPratt(pattern);
         StdOut.println(kMF.search(text));
+        StdOut.println(kMF.search(new In(args[0])));
     }
 }
