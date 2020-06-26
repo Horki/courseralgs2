@@ -1,8 +1,9 @@
 package sedgewick.coursera.week4.bonus;
 
 import edu.princeton.cs.algs4.StdOut;
+import sedgewick.coursera.week4.bonus.interfaces.SubString;
 
-public class BoyerMoore {
+public class BoyerMoore implements SubString {
     private final int[] right;
     private final String pattern;
     private final int M;

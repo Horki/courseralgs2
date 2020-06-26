@@ -2,8 +2,9 @@ package sedgewick.coursera.week4.bonus;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
+import sedgewick.coursera.week4.bonus.interfaces.SubString;
 
-public class KnuthMorrisPratt {
+public class KnuthMorrisPratt implements SubString {
     private final int[][] dfa;
     private final int M;
 
