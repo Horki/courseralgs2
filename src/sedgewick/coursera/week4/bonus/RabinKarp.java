@@ -1,6 +1,5 @@
 package sedgewick.coursera.week4.bonus;
 
-import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import sedgewick.coursera.week4.bonus.interfaces.SubString;
 
@@ -8,13 +7,13 @@ import java.math.BigInteger;
 import java.util.Random;
 
 public class RabinKarp implements SubString {
-    private long patternHash;
+    private final long patternHash;
     // pattern length
-    private int M;
+    private final int M;
     // Modulus
-    private long Q;
+    private final long Q;
     // Radix
-    private int R;
+    private final int R;
     // R^(M-1)/Q
     private long RM;
 
@@ -26,11 +25,10 @@ public class RabinKarp implements SubString {
         for (int i = 1; i <= M - 1; ++i) {
             RM = (R * RM) % Q;
         }
-        patternHash = hash(pattern, M);
-
+        patternHash = hash(pattern);
     }
 
-    private long hash(String key, int M) {
+    private long hash(String key) {
         long h = 0;
         for (int j = 0; j < M; ++j) {
             h = (R * h + key.charAt(j)) % Q;
@@ -44,10 +42,10 @@ public class RabinKarp implements SubString {
         return prime.longValue();
     }
 
-    @Override
+    // Monte Carlo version
     public int search(String text) {
         int N = text.length();
-        long textHash = hash(text, M);
+        long textHash = hash(text);
         if (patternHash == textHash) {
             return 0;
         }
