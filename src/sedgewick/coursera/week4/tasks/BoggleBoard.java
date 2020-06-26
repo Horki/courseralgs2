@@ -1,30 +1,146 @@
 package sedgewick.coursera.week4.tasks;
 
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
+
 public class BoggleBoard {
-    private int rows;
-    private int cols;
+    // the 16 Boggle dice (1992 version)
+    private static final String[] BOGGLE_1992 = {
+            "LRYTTE", "VTHRWE", "EGHWNE", "SEOTIS",
+            "ANAEEG", "IDSYTT", "OATTOW", "MTOICU",
+            "AFPKFS", "XLDERI", "HCPOAS", "ENSIEU",
+            "YLDEVR", "ZNRNHL", "NMIQHU", "OBBAOJ"
+    };
+
+    // the 16 Boggle dice (1983 version)
+    private static final String[] BOGGLE_1983 = {
+            "AACIOT", "ABILTY", "ABJMOQ", "ACDEMP",
+            "ACELRS", "ADENVZ", "AHMORS", "BIFORX",
+            "DENOSW", "DKNOTU", "EEFHIY", "EGINTV",
+            "EGKLUY", "EHINPS", "ELPSTU", "GILRUW",
+    };
+
+    // the 25 Boggle Master / Boggle Deluxe dice
+    private static final String[] BOGGLE_MASTER = {
+            "AAAFRS", "AAEEEE", "AAFIRS", "ADENNN", "AEEEEM",
+            "AEEGMU", "AEGMNN", "AFIRSY", "BJKQXZ", "CCNSTW",
+            "CEIILT", "CEILPT", "CEIPST", "DDLNOR", "DHHLOR",
+            "DHHNOT", "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU",
+            "FIPRSY", "GORRVW", "HIPRRY", "NOOTUW", "OOOTTU"
+    };
+
+    // the 25 Big Boggle dice
+    private static final String[] BOGGLE_BIG = {
+            "AAAFRS", "AAEEEE", "AAFIRS", "ADENNN", "AEEEEM",
+            "AEEGMU", "AEGMNN", "AFIRSY", "BJKQXZ", "CCENST",
+            "CEIILT", "CEILPT", "CEIPST", "DDHNOT", "DHHLOR",
+            "DHLNOR", "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU",
+            "FIPRSY", "GORRVW", "IPRRRY", "NOOTUW", "OOOTTU"
+    };
+
+
+    // letters and frequencies of letters in the English alphabet
+    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final double[] FREQUENCIES = {
+            0.08167, 0.01492, 0.02782, 0.04253, 0.12703, 0.02228,
+            0.02015, 0.06094, 0.06966, 0.00153, 0.00772, 0.04025,
+            0.02406, 0.06749, 0.07507, 0.01929, 0.00095, 0.05987,
+            0.06327, 0.09056, 0.02758, 0.00978, 0.02360, 0.00150,
+            0.01974, 0.00074
+    };
+
+    private final int rows;
+    private final int cols;
+    private char[][] board;
 
     // Initializes a random 4-by-4 Boggle board.
     // (by rolling the Hasbro dice)
     public BoggleBoard() {
-        //
+        rows = 4;
+        cols = 4;
+        StdRandom.shuffle(BOGGLE_1992);
+        board = new char[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                String letters = BOGGLE_1992[cols * i + j];
+                int r = StdRandom.uniform(letters.length());
+                board[i][j] = letters.charAt(r);
+            }
+        }
     }
 
     // Initializes a random m-by-n Boggle board.
     // (using the frequency of letters in the English language)
     public BoggleBoard(int m, int n) {
-        //
+        rows = m;
+        cols = n;
+        if (m <= 0) {
+            throw new IllegalArgumentException("number of rows must be a positive integer");
+        }
+        if (n <= 0) {
+            throw new IllegalArgumentException("number of columns must be a positive integer");
+        }
+        board = new char[m][n];
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                int r = StdRandom.discrete(FREQUENCIES);
+                board[i][j] = ALPHABET.charAt(r);
+            }
+        }
     }
 
     // Initializes a Boggle board from the specified filename.
     public BoggleBoard(String filename) {
-        //
+        In in = new In(filename);
+        rows = in.readInt();
+        cols = in.readInt();
+        if (rows <= 0) {
+            throw new IllegalArgumentException("number of rows must be a positive integer");
+        }
+        if (cols <= 0) {
+            throw new IllegalArgumentException("number of columns must be a positive integer");
+        }
+        board = new char[rows][cols];
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                String letter = in.readString().toUpperCase();
+                if (letter.equals("QU")) {
+                    board[i][j] = 'Q';
+                } else if (letter.length() != 1) {
+                    throw new IllegalArgumentException("invalid character: " + letter);
+                } else if (!ALPHABET.contains(letter)) {
+                    throw new IllegalArgumentException("invalid character: " + letter);
+                } else {
+                    board[i][j] = letter.charAt(0);
+                }
+            }
+        }
     }
 
     // Initializes a Boggle board from the 2d char array.
     // (with 'Q' representing the two-letter sequence "Qu")
     public BoggleBoard(char[][] a) {
-        //
+        rows = a.length;
+        cols = a[0].length;
+        if (rows == 0) {
+            throw new IllegalArgumentException("number of rows must be a positive integer");
+        }
+        if (cols == 0) {
+            throw new IllegalArgumentException("number of columns must be a positive integer");
+        }
+        board = new char[rows][cols];
+        for (int i = 0; i < cols; i++) {
+            if (a[i].length != rows) {
+                throw new IllegalArgumentException("char[][] array is ragged");
+            }
+            for (int j = 0; j < rows; j++) {
+                if (ALPHABET.indexOf(a[i][j]) == -1) {
+                    throw new IllegalArgumentException("invalid character: " + a[i][j]);
+                }
+                board[i][j] = a[i][j];
+            }
+        }
     }
 
     // Returns the number of rows.
@@ -40,11 +156,72 @@ public class BoggleBoard {
     // Returns the letter in row i and column j.
     // (with 'Q' representing the two-letter sequence "Qu")
     public char getLetter(int i, int j) {
-        return 'q';
+        return board[i][j];
     }
 
     // Returns a string representation of the board.
     public String toString() {
-        return null;
+        StringBuilder sb = new StringBuilder(rows + " " + cols + "\n");
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                sb.append(board[i][j]);
+                if (board[i][j] == 'Q') {
+                    // replacing 'Q' with "Qu"
+                    sb.append("u ");
+                } else {
+                    sb.append("  ");
+                }
+            }
+            sb.append("\n");
+        }
+        return sb.toString().trim();
+    }
+
+    // dictionary-algs4.txt board4x4.txt
+    public static void main(String[] args) {
+        In in = new In(args[0]);
+        String[] dictionary = in.readAllStrings();
+        BoggleSolver solver = new BoggleSolver(dictionary);
+        BoggleBoard board = new BoggleBoard(args[1]);
+        StdOut.println(board);
+        int score = 0;
+        Iterable<String> allValidWords = solver.getAllValidWords(board);
+        if (allValidWords != null) {
+            for (String word : allValidWords) {
+                StdOut.println(word);
+                score += solver.scoreOf(word);
+            }
+        }
+        StdOut.println("Score = " + score);
+        {
+            // initialize a 4-by-4 board using Hasbro dice
+            StdOut.println("Initialize a 4-by-4 board using Hasbro dice");
+            StdOut.println("Hasbro board:");
+            BoggleBoard board1 = new BoggleBoard();
+            StdOut.println(board1);
+            StdOut.println();
+        }
+        {
+            // initialize a 4-by-4 board using letter frequencies in English language
+            StdOut.println("Initialize a 4-by-4 board using letter frequencies in English language");
+            StdOut.println("Random 4-by-4 board:");
+            BoggleBoard board2 = new BoggleBoard(4, 4);
+            StdOut.println(board2);
+            StdOut.println();
+        }
+        {
+            // initialize a 4-by-4 board from a 2d char array
+            StdOut.println("Initialize a 4-by-4 board from a 2d char array");
+            StdOut.println("4-by-4 board from 2D character array:");
+            char[][] a = {
+                    {'D', 'O', 'T', 'Y'},
+                    {'T', 'R', 'S', 'F'},
+                    {'M', 'X', 'M', 'O'},
+                    {'Z', 'A', 'B', 'W'}
+            };
+            BoggleBoard board3 = new BoggleBoard(a);
+            StdOut.println(board3);
+            StdOut.println();
+        }
     }
 }
