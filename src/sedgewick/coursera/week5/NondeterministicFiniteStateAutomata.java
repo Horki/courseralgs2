@@ -86,9 +86,10 @@ public class NondeterministicFiniteStateAutomata {
     }
 
     public static void main(String[] args) {
-        String regexp = "( " + args[0] + " )";
-        String txt = args[1];
+        String regexp = "(A*B|BC)D";
+        String txt = "AAAABD";
         NondeterministicFiniteStateAutomata nfa = new NondeterministicFiniteStateAutomata(regexp);
         StdOut.println(nfa.recognizes(txt));
+        StdOut.println(!nfa.recognizes("AAAAC"));
     }
 }
