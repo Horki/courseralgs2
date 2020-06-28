@@ -29,8 +29,8 @@ public class NondeterministicFiniteStateAutomata {
             }
         }
 
-        for (int i = 0; i < text.length(); i++) {
-            Bag<Integer> match = new Bag<Integer>();
+        for (int i = 0; i < text.length(); ++i) {
+            Bag<Integer> match = new Bag<>();
             for (int v : pc) {
                 if (v == M) {
                     continue;
@@ -41,26 +41,24 @@ public class NondeterministicFiniteStateAutomata {
             }
             dfs = new DirectedDFS(G, match);
             pc = new Bag<>();
-            for (int v = 0; v < G.V(); v++) {
+            for (int v = 0; v < G.V(); ++v) {
                 if (dfs.marked(v)) {
                     pc.add(v);
                 }
             }
         }
-
         for (int v : pc) {
             if (v == M) {
                 return true;
             }
         }
         return false;
-
     }
 
-    public Digraph buildEpsilonTransitionDigraph() {
+    private Digraph buildEpsilonTransitionDigraph() {
         Digraph G = new Digraph(M + 1);
         Stack<Integer> ops = new Stack<>();
-        for (int i = 0; i < M; i++) {
+        for (int i = 0; i < M; ++i) {
             int lp = i;
             if (re[i] == '(' || re[i] == '|') {
                 ops.push(i);
@@ -85,11 +83,21 @@ public class NondeterministicFiniteStateAutomata {
         return G;
     }
 
+    // example: (A*B|BC)D AAAABD
     public static void main(String[] args) {
-        String regexp = "(A*B|BC)D";
-        String txt = "AAAABD";
-        NondeterministicFiniteStateAutomata nfa = new NondeterministicFiniteStateAutomata(regexp);
-        StdOut.println(nfa.recognizes(txt));
-        StdOut.println(!nfa.recognizes("AAAAC"));
+        {
+            StdOut.println("run> (A*B|BC)D AAAABD");
+            String regexp = "(A*B|BC)D";
+            String txt = "AAAABD";
+            NondeterministicFiniteStateAutomata nfa = new NondeterministicFiniteStateAutomata(regexp);
+            StdOut.println(nfa.recognizes(txt));
+            StdOut.println(!nfa.recognizes("AAAAC"));
+        }
+        {
+            String regexp = args[0];
+            String txt = args[1];
+            NondeterministicFiniteStateAutomata nfa = new NondeterministicFiniteStateAutomata(regexp);
+            StdOut.println("regex[" + regexp + "] txt[" + txt + "] = " + nfa.recognizes(txt));
+        }
     }
 }
