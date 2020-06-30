@@ -7,7 +7,7 @@ import sedgewick.coursera.week5.bonus.interfaces.Compress;
 
 public class Huffman implements Compress {
     private Huffman() {
-        // not init
+        // Do not instantiate.
     }
 
     private static final int R = 256;

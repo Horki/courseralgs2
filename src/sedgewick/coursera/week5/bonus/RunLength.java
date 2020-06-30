@@ -5,6 +5,10 @@ import edu.princeton.cs.algs4.BinaryStdOut;
 import sedgewick.coursera.week5.bonus.interfaces.Compress;
 
 public class RunLength implements Compress {
+    private RunLength() {
+        // Do not instantiate.
+    }
+
     // maximum run-length count
     private final static int R = 256;
     // numbers of bits per count

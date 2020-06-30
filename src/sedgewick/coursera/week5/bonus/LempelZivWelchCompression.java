@@ -6,16 +6,16 @@ import edu.princeton.cs.algs4.TST;
 import sedgewick.coursera.week5.bonus.interfaces.Compress;
 
 public class LempelZivWelchCompression implements Compress {
+    private LempelZivWelchCompression() {
+        // Do not instantiate.
+    }
+
     // number of input chars
     private static final int R = 256;
     // number of codewords = 2^12
     private static final int L = 4096;
     // codeword width
     private static final int W = 12;
-
-    private LempelZivWelchCompression() {
-        // Do not instantiate.
-    }
 
     public static void compress() {
         String input = BinaryStdIn.readString();
