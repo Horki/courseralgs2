@@ -2,14 +2,15 @@ package sedgewick.coursera.week5.bonus;
 
 import edu.princeton.cs.algs4.BinaryStdIn;
 import edu.princeton.cs.algs4.BinaryStdOut;
+import sedgewick.coursera.week5.bonus.interfaces.Compress;
 
-public class RunLength {
+public class RunLength implements Compress {
     // maximum run-length count
     private final static int R = 256;
     // numbers of bits per count
     private final static int lgR = 8;
 
-    private static void compress() {
+    public static void compress() {
         char cnt = 0;
         boolean b, old = false;
         while (!BinaryStdIn.isEmpty()) {
@@ -31,7 +32,7 @@ public class RunLength {
         BinaryStdOut.close();
     }
 
-    private static void expand() {
+    public static void expand() {
         boolean bit = false;
         while (!BinaryStdIn.isEmpty()) {
             int run = BinaryStdIn.readInt(lgR);

@@ -3,9 +3,9 @@ package sedgewick.coursera.week5.bonus;
 import edu.princeton.cs.algs4.BinaryStdIn;
 import edu.princeton.cs.algs4.BinaryStdOut;
 import edu.princeton.cs.algs4.MinPQ;
-import edu.princeton.cs.algs4.StdOut;
+import sedgewick.coursera.week5.bonus.interfaces.Compress;
 
-public class Huffman {
+public class Huffman implements Compress {
     private Huffman() {
         // not init
     }
@@ -73,7 +73,7 @@ public class Huffman {
         writeTrie(x.right);
     }
 
-    private static void expand() {
+    public static void expand() {
         // read in encoding trie
         Node root = readTrie();
         // read in number of characters
@@ -93,15 +93,15 @@ public class Huffman {
         BinaryStdOut.close();
     }
 
-    private static void compress() {
+    public static void compress() {
         // read the input
         String s = BinaryStdIn.readString();
         char[] input = s.toCharArray();
 
         // tabulate frequency counts
         int[] freq = new int[R];
-        for (int i = 0; i < input.length; ++i) {
-            freq[input[i]]++;
+        for (char c : input) {
+            freq[c]++;
         }
 
         // build Huffman trie
@@ -118,14 +118,16 @@ public class Huffman {
         BinaryStdOut.write(input.length);
 
         // use Huffman code to encode input
-        for (int i = 0; i < input.length; ++i) {
-            String code = st[input[i]];
+        for (char c : input) {
+            String code = st[c];
             for (int j = 0; j < code.length(); ++j) {
                 if (code.charAt(j) == '0') {
                     BinaryStdOut.write(false);
                 } else if (code.charAt(j) == '1') {
                     BinaryStdOut.write(true);
-                } else throw new IllegalStateException("Illegal state");
+                } else {
+                    throw new IllegalStateException("Illegal state");
+                }
             }
         }
 
