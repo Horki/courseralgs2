@@ -20,7 +20,7 @@ public class LempelZivWelchCompression implements Compress {
     public static void compress() {
         String input = BinaryStdIn.readString();
         TST<Integer> st = new TST<>();
-        for (int i = 0; i < R; i++) {
+        for (int i = 0; i < R; ++i) {
             st.put("" + (char) i, i);
         }
         // R is codeword for EOF.
