@@ -12,16 +12,12 @@ public class Simplex {
         n = c.length;
         a = new double[m + 1][m + n + 1];
         for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                a[i][j] = A[i][j];
-            }
+            System.arraycopy(A[i], 0, a[i], 0, n);
         }
         for (int j = n; j < m + n; ++j) {
             a[j - n][j] = 1.0;
         }
-        for (int j = 0; j < n; ++j) {
-            a[m][j] = c[j];
-        }
+        System.arraycopy(c, 0, a[m], 0, n);
         for (int i = 0; i < m; ++i) {
             a[i][m + n] = b[i];
         }
@@ -44,7 +40,7 @@ public class Simplex {
         int p = -1;
         for (int i = 0; i < m; ++i) {
             if (a[i][q] <= 0) {
-                continue;
+                // nothing
             } else if (p == -1) {
                 // consider only positive entries
                 p = i;
@@ -65,7 +61,7 @@ public class Simplex {
         }
         for (int i = 0; i <= m; ++i) {
             if (i != p) {
-                // zero out comuln q
+                // zero out column q
                 a[i][q] = .0;
             }
         }
