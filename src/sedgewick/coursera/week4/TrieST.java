@@ -8,7 +8,7 @@ import sedgewick.coursera.week4.interfaces.StringST;
 public class TrieST<T> implements StringST<T> {
     private static class Node {
         private Object value;
-        private Node[] next = new Node[R];
+        private final Node[] next = new Node[R];
     }
 
     // extended ASCII
