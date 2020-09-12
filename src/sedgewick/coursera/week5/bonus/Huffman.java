@@ -37,7 +37,7 @@ public class Huffman implements Compress {
 
     private static Node buildTrie(int[] freq) {
         // Initialize priority queue with singleton trees.
-        MinPQ<Node> pq = new MinPQ<Node>();
+        MinPQ<Node> pq = new MinPQ<>();
         for (char c = 0; c < R; ++c) {
             if (freq[c] > 0) {
                 pq.insert(new Node(c, freq[c], null, null));
@@ -45,9 +45,9 @@ public class Huffman implements Compress {
         }
         while (pq.size() > 1) {
             // merge two smallest trees
-            Node x = pq.delMin();
-            Node y = pq.delMin();
-            Node parent = new Node('\0', x.freq + y.freq, x, y);
+            Node minLeft = pq.delMin();
+            Node minRight = pq.delMin();
+            Node parent = new Node('\0', minLeft.freq + minRight.freq, minLeft, minRight);
             pq.insert(parent);
         }
         return pq.delMin();
