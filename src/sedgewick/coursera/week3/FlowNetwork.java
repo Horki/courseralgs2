@@ -7,7 +7,7 @@ import edu.princeton.cs.algs4.StdOut;
 public class FlowNetwork {
     private final int V;
     private int E;
-    private Bag<FlowEdge>[] adj;
+    private final Bag<FlowEdge>[] adj;
 
     // Create an empty flow network with V vertices
     public FlowNetwork(int V) {
@@ -24,7 +24,7 @@ public class FlowNetwork {
         this(in.readInt());
         int edges = in.readInt();
         if (edges < 0) {
-            throw new IllegalArgumentException("number of edges must be nonnegative");
+            throw new IllegalArgumentException("number of edges must be non negative");
         }
         for (int i = 0; i < edges; ++i) {
             int v = in.readInt();
@@ -94,11 +94,11 @@ public class FlowNetwork {
 
     public String toString() {
         StringBuilder buff = new StringBuilder();
-        buff.append(V + " " + E + "\n");
+        buff.append(V).append(" ").append(E).append("\n");
         for (int v = 0; v < V; ++v) {
-            buff.append(v + ": ");
+            buff.append(v).append(": ");
             for (FlowEdge e : adj(v)) {
-                buff.append(e + "  ");
+                buff.append(e).append("  ");
             }
             buff.append("\n");
         }
