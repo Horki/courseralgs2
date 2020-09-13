@@ -4,10 +4,6 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class MSDRadixSort {
-    // Radix
-    private static int R = 256;
-    // Auxiliary array for distribution
-    private static String[] aux;
 
     private static int charAt(String s, int d) {
         if (d < s.length()) {
@@ -17,7 +13,8 @@ public class MSDRadixSort {
     }
 
     public static void sort(String[] a) {
-        aux = new String[a.length];
+        // Auxiliary array for distribution
+        String[] aux = new String[a.length];
         sort(a, aux, 0, a.length - 1, 0);
     }
 
@@ -45,21 +42,23 @@ public class MSDRadixSort {
         if (hi <= lo) {
             return;
         }
-        int[] count = new int[R + 2];
+        // Radix
+        int r1 = 256;
+        int[] count = new int[r1 + 2];
         for (int i = lo; i <= hi; ++i) {
             count[charAt(a[i], d) + 2]++;
         }
-        for (int r = 0; r < R + 1; ++r) {
+        for (int r = 0; r < r1 + 1; ++r) {
             count[r + 1] += count[r];
         }
         for (int i = lo; i <= hi; ++i) {
             aux[count[charAt(a[i], d) + 1]++] = a[i];
         }
-        for (int i = lo; i <= hi; ++i) {
-            a[i] = aux[i - lo];
+        if (hi + 1 - lo >= 0) {
+            System.arraycopy(aux, 0, a, lo, hi + 1 - lo);
         }
         // sort R subarrays recursively
-        for (int r = 0; r < R; ++r) {
+        for (int r = 0; r < r1; ++r) {
             sort(a, aux, lo + count[r], lo + count[r + 1] - 1, d + 1);
         }
     }
