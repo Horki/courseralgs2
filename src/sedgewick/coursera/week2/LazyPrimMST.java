@@ -8,7 +8,7 @@ import sedgewick.coursera.week2.abstracts.MinimumSpanningTree;
 
 public class LazyPrimMST extends MinimumSpanningTree {
     // MST vertices
-    private final boolean marked[];
+    private final boolean[] marked;
     // MST edges
     private final Queue<Edge> mst;
     // Crossing (and ineligible) edges
