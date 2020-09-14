@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class EagerPrimMST extends MinimumSpanningTree {
     // shortest edge from tree vertex
-    private Edge[] edgeTo;
+    private final Edge[] edgeTo;
     // distTo[w] = edgeTo[w].weight()
     private final double[] distTo;
     // true if v on tree
@@ -18,7 +18,7 @@ public class EagerPrimMST extends MinimumSpanningTree {
     // Crossing (and ineligible) edges
     private final IndexMinPQ<Double> pq;
 
-    private double weight;
+    private final double weight;
     private final Bag<Edge> mst;
 
     public EagerPrimMST(EdgeWeightedGraph G) {
