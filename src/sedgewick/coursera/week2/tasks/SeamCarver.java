@@ -264,7 +264,7 @@ public class SeamCarver {
             StdOut.println("Check result, red buffer vertical");
             try {
                 System.in.read();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             seamCarver.removeVerticalSeam(verticalSeam);
             Picture picture1 = seamCarver.picture();
@@ -272,7 +272,7 @@ public class SeamCarver {
             StdOut.println("Check result, removed vertical");
             try {
                 System.in.read();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
         {
@@ -283,7 +283,7 @@ public class SeamCarver {
             StdOut.println("Check result, red buffer horizontal");
             try {
                 System.in.read();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             seamCarver.removeHorizontalSeam(horizontalSeam);
             Picture picture1 = seamCarver.picture();
@@ -291,7 +291,7 @@ public class SeamCarver {
             StdOut.println("Check result, removed horizontal");
             try {
                 System.in.read();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
 
