@@ -25,7 +25,7 @@ public class EdgeWeightedDigraph {
     public EdgeWeightedDigraph(int V, int E) {
         this(V);
         if (E < 0) {
-            throw new IllegalArgumentException("Number of edges in a Digraph must be nonnegative");
+            throw new IllegalArgumentException("Number of edges in a Digraph must be non negative");
         }
         for (int i = 0; i < E; ++i) {
             int v = StdRandom.uniform(V);
@@ -49,7 +49,7 @@ public class EdgeWeightedDigraph {
             }
             int E = in.readInt();
             if (E < 0) {
-                throw new IllegalArgumentException("Number of edges must be nonnegative");
+                throw new IllegalArgumentException("Number of edges must be non negative");
             }
             indegree = new int[V];
             adj = (Bag<DirectedEdge>[]) new Bag[V];
@@ -171,11 +171,11 @@ public class EdgeWeightedDigraph {
     // string representation
     public String toString() {
         StringBuilder buff = new StringBuilder();
-        buff.append(V + " " + E + "\n");
+        buff.append(V).append(" ").append(E).append("\n");
         for (int v = 0; v < V; ++v) {
-            buff.append(v + ": ");
+            buff.append(v).append(": ");
             for (DirectedEdge e : adj(v)) {
-                buff.append(e + "  ");
+                buff.append(e).append("  ");
             }
             buff.append("\n");
         }
