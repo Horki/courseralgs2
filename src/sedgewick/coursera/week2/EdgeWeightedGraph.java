@@ -31,7 +31,7 @@ public class EdgeWeightedGraph {
         try {
             V = in.readInt();
             if (V < 0) {
-                throw new IllegalArgumentException("number of vertices in a Digraph must be nonnegative");
+                throw new IllegalArgumentException("number of vertices in a Digraph must be non negative");
             }
             int E = in.readInt();
             if (E < 0) {
@@ -112,11 +112,11 @@ public class EdgeWeightedGraph {
     // string representation
     public String toString() {
         StringBuilder buff = new StringBuilder();
-        buff.append(V + " " + E + "\n");
+        buff.append(V).append(" ").append(E).append("\n");
         for (int v = 0; v < V; ++v) {
-            buff.append(v + ": ");
+            buff.append(v).append(": ");
             for (Edge e : adj(v)) {
-                buff.append(e + "  ");
+                buff.append(e).append("  ");
             }
             buff.append("\n");
         }
