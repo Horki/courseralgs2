@@ -6,7 +6,7 @@ import edu.princeton.cs.algs4.StdOut;
 import sedgewick.coursera.week1.abstracts.Adj;
 
 public class DirectedDFS {
-    private boolean[] marked;
+    private final boolean[] marked;
 
     public DirectedDFS(Adj G, Iterable<Integer> sources) {
         marked = new boolean[G.V()];
