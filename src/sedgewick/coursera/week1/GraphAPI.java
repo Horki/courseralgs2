@@ -21,11 +21,11 @@ public class GraphAPI extends Adj {
 
     public String toString() {
         StringBuilder res = new StringBuilder();
-        res.append(V + " vertices, " + E + " edges \n");
+        res.append(V).append(" vertices, ").append(E).append(" edges \n");
         for (int v = 0; v < V; ++v) {
-            res.append(v + ": ");
+            res.append(v).append(": ");
             for (int w : adj(v)) {
-                res.append(w + ", ");
+                res.append(w).append(", ");
             }
             res.append("\n");
         }
