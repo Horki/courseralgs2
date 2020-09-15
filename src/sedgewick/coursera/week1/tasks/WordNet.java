@@ -13,8 +13,8 @@ public class WordNet {
     private final Digraph G;
     private int V;
 
-    private RedBlackBST<String, ArrayList<Integer>> nounsTree;
-    private HashMap<Integer, String> nounsMap;
+    private final RedBlackBST<String, ArrayList<Integer>> nounsTree;
+    private final HashMap<Integer, String> nounsMap;
 
     // constructor takes the name of the two input files
     public WordNet(String syn, String hypernyms) {
