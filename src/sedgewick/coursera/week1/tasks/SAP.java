@@ -104,9 +104,7 @@ public class SAP {
     }
 
     private void validateVertex(Iterable<Integer> v) {
-        Iterator<Integer> iter = v.iterator();
-        while (iter.hasNext()) {
-            Object i = iter.next();
+        for (Object i : v) {
             if (null == i) {
                 throw new IllegalArgumentException("Iter null");
             }
