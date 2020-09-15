@@ -8,10 +8,10 @@ public class MatrixMaze {
     private final int width;
     private final int height;
     private final int vertex;
-    private final boolean matrix[][];
+    private final boolean[][] matrix;
     private final GraphAPI graph;
 
-    public MatrixMaze(boolean maze[][]) {
+    public MatrixMaze(boolean[][] maze) {
         matrix = maze;
         width = maze[0].length;
         height = maze.length;
