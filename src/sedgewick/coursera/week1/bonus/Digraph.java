@@ -30,7 +30,7 @@ public class Digraph extends Adj {
     // string representation, same as in Graph
     public String toString() {
         StringBuilder buffer = new StringBuilder();
-        buffer.append(V + " vertices, " + E + " edges \n");
+        buffer.append(V).append(" vertices, ").append(E).append(" edges \n");
 //        for (int v = 0; v < V; ++v) {
 //            buffer.append(v + ": ");
 //            for (int w : adj(v)) {
@@ -40,7 +40,7 @@ public class Digraph extends Adj {
 //        }
         for (int v = 0; v < V(); ++v) {
             for (int w : adj(v)) {
-                buffer.append(v + "->" + w + "\n");
+                buffer.append(v).append("->").append(w).append("\n");
             }
         }
         return buffer.toString();
