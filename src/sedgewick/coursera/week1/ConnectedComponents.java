@@ -3,8 +3,8 @@ package sedgewick.coursera.week1;
 import edu.princeton.cs.algs4.*;
 
 public class ConnectedComponents {
-    private boolean marked[];
-    private int[] id;
+    private final boolean[] marked;
+    private final int[] id;
     private int count;
 
     // Find connected components in G
