@@ -75,7 +75,7 @@ public class MatrixMaze {
             StdOut.println("nope");
             return;
         }
-        StringBuilder buff = new StringBuilder("");
+        StringBuilder buff = new StringBuilder();
         // Get walls
         for (int i = 0; i < vertex; ++i) {
             buff.append(matrix[i / width][i % width] ? '0' : '1');
