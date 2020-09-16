@@ -22,3 +22,6 @@ hs_err_pid*
 
 # Bin dir
 out/
+
+# IML
+courseralgs2.iml
